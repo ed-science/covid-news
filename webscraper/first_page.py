@@ -13,8 +13,10 @@ POSTGRES_PASSWORD = ''
 POSTGRES_ADDRES = ''
 POSTGRES_DATABASE = ''
 
-engine = create_engine('postgresql+psycopg2://{}:{}@{}/{}'.format(POSTGRES_USER,POSTGRES_PASSWORD,
-                                                                  POSTGRES_ADDRES,POSTGRES_DATABASE))
+engine = create_engine(
+    f'postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_ADDRES}/{POSTGRES_DATABASE}'
+)
+
 connection = engine.connect()
 
 scrap = Scraper()
