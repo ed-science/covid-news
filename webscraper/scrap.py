@@ -19,7 +19,7 @@ class Scraper():
     
     def get_all_links(self):
 
-        r = requests.get(self.url + '1')
+        r = requests.get(f'{self.url}1')
         soup = BeautifulSoup(r.text,'lxml')
 
         first_page_num = soup.find("span",class_='lx-pagination__page-number qa-pagination-current-page-number').string
@@ -35,18 +35,19 @@ class Scraper():
 
         r = requests.get(link)
         soup = BeautifulSoup(r.text,'lxml')
-        
-        page = {}
-        page['Titulo'] = soup.h1.string
-        page['Data'] = soup.time['datetime']
-        page['Texto'] = ''
-        page['Url'] = link
+
+        page = {
+            'Titulo': soup.h1.string,
+            'Data': soup.time['datetime'],
+            'Texto': '',
+            'Url': link,
+        }
 
         try:
             page['Autor'] = soup.find("li",class_='bbc-1a3w4ok e1c9i7u11').string
         except AttributeError:
             page['Autor'] = 'Não informado'
-        
+
         for element in soup.find_all("p",class_="bbc-bm53ic e1cc2ql70"):
             text = (str(element.string) + "\n")
             page['Texto'] += text
